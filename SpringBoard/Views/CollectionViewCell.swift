@@ -26,15 +26,21 @@ final class CollectionViewCell: UICollectionViewCell {
             imageView.isHidden = true
             activityIndicator.startAnimating()
         case .cashed:
-            guard
-                let cacheKey = cacheKey,
-                let localUrl = UIImage.fileInDocumentsDirectory(filename: cacheKey),
-                let cachedImage = UIImage.loadImageFrom(localUrl)
-                else {
-                    setImage(UIImage(named: "empty"))
-                    return
+            DispatchQueue.global().async { [weak self] in
+                guard
+                    let cacheKey = cacheKey,
+                    let localUrl = UIImage.fileInDocumentsDirectory(filename: cacheKey),
+                    let cachedImage = UIImage.loadImageFrom(localUrl)
+                    else {
+                        DispatchQueue.main.async {
+                            self?.setImage(UIImage(named: "empty"))
+                        }
+                        return
+                }
+                DispatchQueue.main.async {
+                    self?.setImage(cachedImage)
+                }
             }
-            setImage(cachedImage)
         case .notSet, .empty:
             activityIndicator.stopAnimating()
             imageView.isHidden = true

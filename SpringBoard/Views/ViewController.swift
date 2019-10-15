@@ -27,9 +27,8 @@ final class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadImageQueue.maxConcurrentOperationCount = 10
         collectionView.register(CollectionViewCell.nib, forCellWithReuseIdentifier: CollectionViewCell.identifier)
-        
         reloadImages()
     }
     
@@ -43,7 +42,8 @@ final class ViewController: UIViewController {
     private func reloadImages() {
         images = []
         FileManager.clearDocumentsDirectory()
-        for index in 0..<140 {
+        let numberItemsInPage = numberOfSections * numberOfRows * 2
+        for index in 0..<numberItemsInPage {
             images.append(ImageObject(cacheKey: "\(index)"))
         }
     }
@@ -58,17 +58,20 @@ final class ViewController: UIViewController {
     @IBAction func addAction(_ sender: Any) {
         if let indexEmpty = images.firstIndex(where: { $0.state == .empty }) {
             images[indexEmpty] = ImageObject(cacheKey: "\(indexEmpty)")
+            let section = indexEmpty/numberOfRows
+            let item = indexEmpty - section * numberOfRows
+            collectionView.reloadItems(at: [IndexPath(item: item, section: section)])
         } else {
             images.append(ImageObject(cacheKey: "\(images.count)"))
-        }
-        let numbersOfElements = numberOfSections * numberOfRows
-        if images.count % numbersOfElements > 0 {
-            let emptyCount = numbersOfElements - images.count % numbersOfElements
-            for _ in 0..<emptyCount {
-                images.append(ImageObject(cacheKey: nil, state: .empty))
+            let numbersOfElements = numberOfSections * numberOfRows
+            if images.count % numbersOfElements > 0 {
+                let emptyCount = numbersOfElements - images.count % numbersOfElements
+                for _ in 0..<emptyCount {
+                    images.append(ImageObject(cacheKey: nil, state: .empty))
+                }
             }
+            collectionView.reloadData()
         }
-        collectionView.reloadData()
         
         let section = collectionView.numberOfSections - 1;
         let item = collectionView.numberOfItems(inSection: section) - 1
@@ -111,7 +114,9 @@ extension ViewController: UICollectionViewDataSource {
             let operationLoad = ImageLoadOperation(imageObject: imageObject)
             operationLoad.completionBlock = {
                 OperationQueue.main.addOperation {
-                    collectionView.reloadItems(at: [indexPath])
+                    if !operationLoad.isCancelled {
+                        collectionView.reloadItems(at: [indexPath])
+                    }
                 }
             }
             loadImageQueue.addOperation(operationLoad)

@@ -24,8 +24,8 @@ final class ImageLoadOperation: AbstractAsyncOperation {
             return
         }
         getImageData(from: url) { [weak self] (data, _, error) in
-            guard let self = self else { return }
             print("download ended")
+            guard let self = self else { return }
             if let data = data, error == nil {
                 guard
                     let image = UIImage(data: data),
