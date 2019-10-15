@@ -20,43 +20,14 @@ final class CollectionViewCell: UICollectionViewCell {
         imageView.isHidden = true
     }
     
-    func setup(imageObject: ImageObject, completion: @escaping () -> ()) {
-        switch imageObject.status {
-        case .notSet:
-            imageView.isHidden = true
-            activityIndicator.startAnimating()
-            guard let url = imageObject.url else {
-                imageObject.status = .error
-                setImage(UIImage(named: "empty"))
-                return
-            }
-            imageObject.status = .loading
-            getImageData(from: url) { (data, _, error) in
-                print("download ended")
-                if let data = data, error == nil {
-                    guard
-                        let image = UIImage(data: data),
-                        let cacheKey = imageObject.cacheKey,
-                        let localUrl = UIImage.fileInDocumentsDirectory(filename: cacheKey)
-                        else {
-                            imageObject.status = .error
-                            completion()
-                            return
-                    }
-                    image.saveTo(localUrl)
-                    imageObject.status = .cashed
-                    completion()
-                } else {
-                    imageObject.status = .error
-                    completion()
-                }
-            }
+    func setup(state: ImageState, cacheKey: String?) {
+        switch state {
         case .loading:
             imageView.isHidden = true
             activityIndicator.startAnimating()
         case .cashed:
             guard
-                let cacheKey = imageObject.cacheKey,
+                let cacheKey = cacheKey,
                 let localUrl = UIImage.fileInDocumentsDirectory(filename: cacheKey),
                 let cachedImage = UIImage.loadImageFrom(localUrl)
                 else {
@@ -64,7 +35,7 @@ final class CollectionViewCell: UICollectionViewCell {
                     return
             }
             setImage(cachedImage)
-        case .empty:
+        case .notSet, .empty:
             activityIndicator.stopAnimating()
             imageView.isHidden = true
         case .error:
@@ -76,13 +47,6 @@ final class CollectionViewCell: UICollectionViewCell {
         imageView.image = image
         activityIndicator.stopAnimating()
         imageView.isHidden = false
-    }
-    
-    private func getImageData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        DispatchQueue.global(qos: .utility).async {
-            print("download started")
-            URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-        }
     }
     
 }

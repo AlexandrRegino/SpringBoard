@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E9431F8F2355BE70005745E3 /* AbstractAsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9431F8E2355BE70005745E3 /* AbstractAsyncOperation.swift */; };
+		E9431F912355D610005745E3 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9431F902355D610005745E3 /* Requests.swift */; };
+		E9431F962355DDFA005745E3 /* ImageLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9431F952355DDFA005745E3 /* ImageLoadOperation.swift */; };
 		E97455432354AD1C00D9453D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97455422354AD1C00D9453D /* AppDelegate.swift */; };
 		E97455472354AD1C00D9453D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97455462354AD1C00D9453D /* ViewController.swift */; };
 		E974554A2354AD1C00D9453D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97455482354AD1C00D9453D /* Main.storyboard */; };
@@ -21,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E9431F8E2355BE70005745E3 /* AbstractAsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractAsyncOperation.swift; sourceTree = "<group>"; };
+		E9431F902355D610005745E3 /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		E9431F952355DDFA005745E3 /* ImageLoadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadOperation.swift; sourceTree = "<group>"; };
 		E974553F2354AD1C00D9453D /* SpringBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpringBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E97455422354AD1C00D9453D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E97455462354AD1C00D9453D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +53,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E9431F922355DD25005745E3 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				E9431F902355D610005745E3 /* Requests.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		E9431F932355DD38005745E3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E97455622354AF1700D9453D /* ImageObject.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E9431F942355DDA3005745E3 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				E9431F8E2355BE70005745E3 /* AbstractAsyncOperation.swift */,
+				E9431F952355DDFA005745E3 /* ImageLoadOperation.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
 		E97455362354AD1C00D9453D = {
 			isa = PBXGroup;
 			children = (
@@ -66,13 +97,15 @@
 		E97455412354AD1C00D9453D /* SpringBoard */ = {
 			isa = PBXGroup;
 			children = (
-				E974555D2354AED100D9453D /* Views */,
-				E97455562354ADA300D9453D /* Extensions */,
+				E9431F922355DD25005745E3 /* API */,
 				E97455422354AD1C00D9453D /* AppDelegate.swift */,
 				E974554B2354AD1F00D9453D /* Assets.xcassets */,
-				E974554D2354AD1F00D9453D /* LaunchScreen.storyboard */,
+				E97455562354ADA300D9453D /* Extensions */,
 				E97455502354AD1F00D9453D /* Info.plist */,
-				E97455622354AF1700D9453D /* ImageObject.swift */,
+				E974554D2354AD1F00D9453D /* LaunchScreen.storyboard */,
+				E9431F932355DD38005745E3 /* Models */,
+				E9431F942355DDA3005745E3 /* Operations */,
+				E974555D2354AED100D9453D /* Views */,
 			);
 			path = SpringBoard;
 			sourceTree = "<group>";
@@ -173,10 +206,13 @@
 				E97455472354AD1C00D9453D /* ViewController.swift in Sources */,
 				E97455432354AD1C00D9453D /* AppDelegate.swift in Sources */,
 				E97455602354AEE600D9453D /* CollectionViewCell.swift in Sources */,
+				E9431F912355D610005745E3 /* Requests.swift in Sources */,
 				E97455632354AF1700D9453D /* ImageObject.swift in Sources */,
+				E9431F8F2355BE70005745E3 /* AbstractAsyncOperation.swift in Sources */,
 				E97455582354ADF100D9453D /* UICollectionViewCellExtensions.swift in Sources */,
 				E974555C2354AE7000D9453D /* FileManagerExtensions.swift in Sources */,
 				E974555A2354AE1F00D9453D /* UIImageExtensions.swift in Sources */,
+				E9431F962355DDFA005745E3 /* ImageLoadOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +357,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HP2Z75J9N2;
 				INFOPLIST_FILE = SpringBoard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -339,6 +376,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HP2Z75J9N2;
 				INFOPLIST_FILE = SpringBoard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (

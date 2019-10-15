@@ -22,6 +22,7 @@ final class ViewController: UIViewController {
     private var cellWidth: CGFloat!
     private var cellHeight: CGFloat!
     private var collectionViewWidth: CGFloat!
+    private let loadImageQueue = OperationQueue()
     
     
     override func viewDidLoad() {
@@ -48,13 +49,14 @@ final class ViewController: UIViewController {
     }
     
     @IBAction func reloadAction(_ sender: Any) {
+        loadImageQueue.cancelAllOperations()
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
         reloadImages()
         collectionView.reloadData()
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: UICollectionView.ScrollPosition.left, animated: true)
     }
     
     @IBAction func addAction(_ sender: Any) {
-        if let indexEmpty = images.firstIndex(where: { $0.status == .empty }) {
+        if let indexEmpty = images.firstIndex(where: { $0.state == .empty }) {
             images[indexEmpty] = ImageObject(cacheKey: "\(indexEmpty)")
         } else {
             images.append(ImageObject(cacheKey: "\(images.count)"))
@@ -63,7 +65,7 @@ final class ViewController: UIViewController {
         if images.count % numbersOfElements > 0 {
             let emptyCount = numbersOfElements - images.count % numbersOfElements
             for _ in 0..<emptyCount {
-                images.append(ImageObject(cacheKey: nil, status: .empty))
+                images.append(ImageObject(cacheKey: nil, state: .empty))
             }
         }
         collectionView.reloadData()
@@ -103,11 +105,18 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell
         let index = indexPath.section * numberOfRows + indexPath.row
-        cell?.setup(imageObject: images[index], completion: {
-            DispatchQueue.main.async {
-                collectionView.reloadItems(at: [indexPath])
+        let imageObject = images[index]
+        if imageObject.state == .notSet {
+            imageObject.state = .loading
+            let operationLoad = ImageLoadOperation(imageObject: imageObject)
+            operationLoad.completionBlock = {
+                OperationQueue.main.addOperation {
+                    collectionView.reloadItems(at: [indexPath])
+                }
             }
-        })
+            loadImageQueue.addOperation(operationLoad)
+        }
+        cell?.setup(state: imageObject.state, cacheKey: imageObject.cacheKey)
         return cell ?? UICollectionViewCell()
     }
 }

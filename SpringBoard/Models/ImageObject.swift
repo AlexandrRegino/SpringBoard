@@ -11,15 +11,15 @@ import Foundation
 final class ImageObject {
     var url = URL(string: "http://lorempixel.com/200/200/")
     var cacheKey: String?
-    var status: ImageStatus
+    var state: ImageState
     
-    init(cacheKey: String?, status: ImageStatus = .notSet) {
+    init(cacheKey: String?, state: ImageState = .notSet) {
         self.cacheKey = cacheKey
-        self.status = status
+        self.state = state
     }
 }
 
-enum ImageStatus {
+enum ImageState {
     case notSet
     case loading
     case cashed
