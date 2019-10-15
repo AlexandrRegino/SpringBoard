@@ -13,17 +13,15 @@ final class ViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageNumberLabel: UILabel!
     
-    private let numberOfSections = 7
-    private let numberOfRows = 10
-    private let inset: CGFloat = 2
-    
-    var images: [ImageObject] = []
+    private var images: [ImageObject] = []
+    private let loadImageQueue = OperationQueue()
     
     private var cellWidth: CGFloat!
     private var cellHeight: CGFloat!
     private var collectionViewWidth: CGFloat!
-    private let loadImageQueue = OperationQueue()
-    
+    private let numberOfSections = 7
+    private let numberOfRows = 10
+    private let inset: CGFloat = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +47,8 @@ final class ViewController: UIViewController {
     }
     
     @IBAction func reloadAction(_ sender: Any) {
-        loadImageQueue.cancelAllOperations()
         collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+        loadImageQueue.cancelAllOperations()
         reloadImages()
         collectionView.reloadData()
     }

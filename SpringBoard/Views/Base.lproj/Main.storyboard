@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yco-uj-vqw">
-                                <rect key="frame" x="0.0" y="111" width="414" height="705"/>
+                                <rect key="frame" x="0.0" y="110" width="414" height="706"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="h1W-ur-oDh">
                                     <size key="itemSize" width="50" height="50"/>
@@ -32,15 +32,19 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvV-bf-E9k">
-                                <rect key="frame" x="45" y="56" width="30" height="35"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <rect key="frame" x="45" y="56" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GvV-bf-E9k" secondAttribute="height" id="PpN-gH-cxU"/>
+                                    <constraint firstAttribute="height" constant="44" id="o5W-ZJ-Foi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="+"/>
                                 <connections>
                                     <action selector="addAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dZ0-oR-fAq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pj4-e9-sTB">
-                                <rect key="frame" x="284" y="56" width="85" height="35"/>
+                                <rect key="frame" x="284" y="56" width="85" height="44"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Reload All"/>
                                 <connections>
@@ -58,10 +62,11 @@
                         <constraints>
                             <constraint firstItem="GvV-bf-E9k" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="45" id="14g-gI-oWb"/>
                             <constraint firstItem="pj4-e9-sTB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GvV-bf-E9k" secondAttribute="trailing" constant="5" id="3Vq-r0-kaZ"/>
-                            <constraint firstItem="yco-uj-vqw" firstAttribute="top" secondItem="GvV-bf-E9k" secondAttribute="bottom" constant="20" id="42q-b2-Ya2"/>
+                            <constraint firstItem="yco-uj-vqw" firstAttribute="top" secondItem="GvV-bf-E9k" secondAttribute="bottom" constant="10" id="42q-b2-Ya2"/>
                             <constraint firstItem="yco-uj-vqw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="44A-Yo-iCa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VOn-un-1tD" secondAttribute="trailing" id="5Bn-2n-HYQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yco-uj-vqw" secondAttribute="trailing" id="BrB-Kg-DZk"/>
+                            <constraint firstItem="pj4-e9-sTB" firstAttribute="height" secondItem="GvV-bf-E9k" secondAttribute="height" id="PxH-7X-PgG"/>
                             <constraint firstItem="GvV-bf-E9k" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="Qn5-9F-l91"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pj4-e9-sTB" secondAttribute="trailing" constant="45" id="VNe-ra-kNj"/>
                             <constraint firstItem="VOn-un-1tD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZZc-lp-b3j"/>
